@@ -100,6 +100,7 @@ int main()
 
 #include <iostream>
 #include <string>
+#include <list>
 #include <vector>
 using namespace std;
 
@@ -120,31 +121,33 @@ public:
 
 class Playlista {
 private:
-    vector<Music> muzyka;
+    list<Music> muzyka;
 public:
     void addSong(Music *stop) {
         muzyka.push_back(*stop);
     }
+
     void delSong(Music music){
-        vector<Music>::iterator x=muzyka.begin();
-        for (Music u:muzyka){
-            if(u.getId()!=music.getId()){
+        list<Music>::iterator x;
+        x=muzyka.begin();
+
+        for(Music m:muzyka){
+            if(m.getId()!=music.getId()){
                 x++;
-                break;
             }
         }
         muzyka.erase(x);
     }
+
     void print(){
-        for(Music u:muzyka){
-            u.print();
+        for(Music m:muzyka){
+            m.print();
         }
     }
 };
 
 int main ()
 {
-    int wybor, temp=0;
     string str;
     cout<<"Podaj tekst: ";
     getline(cin,str);
@@ -154,20 +157,27 @@ int main ()
     }
     cout << '\n';
 
-    vector<Music> muzyka;
-    muzyka.emplace_back(1, "Marco Polo", "idk");
-    muzyka.emplace_back(2, "Polskie Tango", "idk");
-    muzyka.emplace_back(3, "On My Way", "idk");
-    muzyka.emplace_back(4, "Angel With a Shotgun", "iddk");
-    muzyka.emplace_back(5, "PMA", "idk");
-    muzyka.emplace_back(6, "Courtesy Call", "idk");
+    vector<Music> muza;
+    muza.emplace_back(1, "Marco Polo", "idk");
+    muza.emplace_back(2, "Polskie Tango", "idk");
+    muza.emplace_back(3, "On My Way", "idk");
+    muza.emplace_back(4, "Angel With a Shotgun", "iddk");
+    muza.emplace_back(5, "PMA", "idk");
+    muza.emplace_back(6, "Courtesy Call", "idk");
 
+    //dodawanie playlisty
     Playlista pl1;
-
-    pl1.addSong(&muzyka[1]);
-    pl1.addSong(&muzyka[3]);
+    //dodawanie piosenek do playlisty
+    pl1.addSong(&muza[1]);
+    pl1.addSong(&muza[3]);
+    pl1.addSong(&muza[2]);
+    //wyswietlenie piosenek
     pl1.print();
-    pl1.delSong(muzyka[1]);
+    //usuniecie piosenek
+    cout<<"Po usunieciu:"<<endl;
+    pl1.delSong(muza[1]);
+    pl1.delSong(muza[3]);
+    //wyswietlenie piosenek
     pl1.print();
 
     return 0;
